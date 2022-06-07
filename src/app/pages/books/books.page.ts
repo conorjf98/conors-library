@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from 'src/app/services/book.service';
+import { LoadingController } from '@ionic/angular';
+import { BookObject, BookService } from 'src/app/services/book.service';
 
 @Component({
   selector: 'app-books',
@@ -7,11 +8,23 @@ import { BookService } from 'src/app/services/book.service';
   styleUrls: ['./books.page.scss'],
 })
 export class BooksPage implements OnInit {
-
-  constructor(private bookService: BookService) { }
+  books: BookObject[] = [];
+  constructor(private bookService: BookService, private loadingController: LoadingController) { }
 
   ngOnInit() {
+    this.loadBooks();
+  }
+
+  async loadBooks(){
+    const loading = await this.loadingController.create({
+      message: 'Loading...',
+      spinner: 'bubbles',
+    });
+
+    await loading.present();
     this.bookService.getAllBooks().subscribe(res => {
+      loading.dismiss();
+      this.books = res;
       console.log(res);
     })
   }

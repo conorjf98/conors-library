@@ -1,9 +1,15 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>books</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Conors Library</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+<ion-list>
+  <ion-item button *ngFor="let book of books" [routerLink]="[book.id]">
+    <ion-label>{{book.title}}
+      <p>{{book.author}}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
 </ion-content>
