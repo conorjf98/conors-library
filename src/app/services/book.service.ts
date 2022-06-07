@@ -10,6 +10,7 @@ export interface BookObject {
   price: number;
   currencyCode: string;
   author: string;
+  description: string;
 }
 
 @Injectable({
