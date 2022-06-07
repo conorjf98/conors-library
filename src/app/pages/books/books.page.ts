@@ -15,17 +15,18 @@ export class BooksPage implements OnInit {
     this.loadBooks();
   }
 
-  async loadBooks(){
-    const loading = await this.loadingController.create({
+  async loadBooks() {
+    //create a loading popup 
+    const loadingPopup = await this.loadingController.create({
       message: 'Loading...',
       spinner: 'bubbles',
     });
+    await loadingPopup.present();
 
-    await loading.present();
+    //subscribing to an observable with a list of books as the result
     this.bookService.getAllBooks().subscribe(res => {
-      loading.dismiss();
+      loadingPopup.dismiss();
       this.books = res;
-      console.log(res);
     })
   }
 

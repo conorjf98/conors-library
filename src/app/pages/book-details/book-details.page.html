@@ -1,9 +1,22 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>bookDetails</ion-title>
+  <ion-toolbar color="secondary">
+    <ion-title>{{book?.title}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/books"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Title: {{book?.title}}</ion-card-title>
+      <ion-card-subtitle></ion-card-subtitle>
+      <ion-text>
+        <p>Author: {{book?.author}}</p>
+        <p>ISBN: {{book?.isbn}}</p>
+        <p>Price: {{book?.price}}</p>
+      </ion-text>
+    </ion-card-header>
+  </ion-card>
 </ion-content>
