@@ -9,6 +9,7 @@ import { BookObject, BookService } from 'src/app/services/book.service';
 })
 export class BooksPage implements OnInit {
   books: BookObject[] = [];
+  isDataLoaded = false;
   constructor(private bookService: BookService, private loadingController: LoadingController) { }
 
   ngOnInit() {
@@ -26,6 +27,7 @@ export class BooksPage implements OnInit {
     //subscribing to an observable with a list of books as the result
     this.bookService.getAllBooks().subscribe(res => {
       loadingPopup.dismiss();
+      this.isDataLoaded = true;
       this.books = res;
     })
   }
