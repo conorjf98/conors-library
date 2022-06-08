@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { BookObject, BookService } from 'src/app/services/book.service';
+import { GlobalVariablesService } from 'src/app/services/global-variables.service';
 
 @Component({
   selector: 'app-book-details',
@@ -20,22 +21,13 @@ export class BookDetailsPage implements OnInit {
   }
 
   async loadBookDetails(id: number) {
-    //create a loading popup 
-
-    const loadingPopup = await this.loadingController.create({
-      message: 'Loading...',
-      spinner: 'bubbles',
-    });
-    await loadingPopup.present();
-
     //subscribing to an observable with a list of books as the result
     this.bookService.getBookDetails(id).subscribe(res => {
-      loadingPopup.dismiss();
       this.isDataLoaded = true;
       this.book = res;
       //convert the currency string to symbol based on enum names and values
-      let price = Currency[this.book.currencyCode] + this.book.price;
-
+      let price = GlobalVariablesService.convertCurrency(this.book.currencyCode) + this.book.price;
+      
       //overwrite price value with new appended currency symbol
       this.book.price = price;
     })
@@ -43,9 +35,5 @@ export class BookDetailsPage implements OnInit {
 }
 
 
-enum Currency {
-  EUR = "€",
-  GBP = '£',
-  USD = '$',
-}
+
 
