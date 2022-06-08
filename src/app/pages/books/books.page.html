@@ -26,14 +26,14 @@
     <div class="search">
       <ion-item lines="none" class="ion-no-padding">
         <ion-icon slot="start" name="search-outline"></ion-icon>
-        <ion-input placeholder="Search books"></ion-input>
+        <ion-input [(ngModel)]="term" placeholder="Search books" clearInput></ion-input>
       </ion-item>
     </div>
   </div>
 
   
   <ion-col>
-      <ion-card button *ngFor="let book of books" [routerLink]="[book.id]">
+      <ion-card button *ngFor="let book of books | filter:term" [routerLink]="[book.id]">
         <ion-card-content>
           <p class="title">{{book.title}}</p>
           <p class="author">By {{book.author}}</p>

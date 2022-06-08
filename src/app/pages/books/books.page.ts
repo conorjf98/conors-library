@@ -10,6 +10,7 @@ import { BookObject, BookService } from 'src/app/services/book.service';
 export class BooksPage implements OnInit {
   books: BookObject[] = [];
   isDataLoaded = false;
+  term;
   constructor(private bookService: BookService, private loadingController: LoadingController) { }
 
   ngOnInit() {
