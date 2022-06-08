@@ -1,23 +1,51 @@
-<ion-header>
-  <ion-toolbar color="secondary">
-    <ion-title>{{book?.title}}</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title>Details</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/books"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="isDataLoaded">
+  <div class="banner">
+    <img src="../../../assets/appBanner.png">
+    <div class="caption" ion-padding>
+      {{book?.title}}
+    </div>
+    <div class="subCaption" ion-padding>
+      By {{book?.author}}
+    </div>
+  </div>
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>Title: {{book?.title}}</ion-card-title>
-      <ion-card-subtitle></ion-card-subtitle>
-      <ion-text>
-        <p>Author: {{book?.author}}</p>
-        <p>ISBN: {{book?.isbn}}</p>
-        <p>Price: {{book?.price}}</p>
-        <p>Description: {{book?.description}}</p>
-      </ion-text>
-    </ion-card-header>
+    <ion-card-content>
+      <p class="title">Description:</p>
+      <p class="description">{{book?.description}}</p>
+      <p class="price">price: {{book?.price}}</p>
+      <p class="isbn">ISBN: {{book?.isbn}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-content *ngIf="!isDataLoaded">
+  <div class="banner">
+    <img src="../../../assets/appBanner.png">
+  </div>
+  <ion-card>
+    <ion-card-content>
+      <ion-skeleton-text class="title" animated style="width: 30%"></ion-skeleton-text>
+      <ion-skeleton-text class="description" animated style="width: 90%"></ion-skeleton-text>
+      <ion-skeleton-text class="description" animated style="width: 90%"></ion-skeleton-text>
+      <ion-skeleton-text class="description" animated style="width: 90%"></ion-skeleton-text>
+      <ion-skeleton-text class="description" animated style="width: 90%"></ion-skeleton-text>
+      <ion-skeleton-text class="description" animated style="width: 90%"></ion-skeleton-text>
+      <ion-skeleton-text class="description" animated style="width: 90%"></ion-skeleton-text>
+      <ion-skeleton-text class="description" animated style="width: 90%"></ion-skeleton-text>
+      <ion-skeleton-text class="description" animated style="width: 90%"></ion-skeleton-text>
+      <ion-skeleton-text class="description" animated style="width: 90%"></ion-skeleton-text>
+     
+      <ion-skeleton-text class="price" animated style="width: 20%"></ion-skeleton-text>
+      <ion-skeleton-text class="isbn" animated style="width: 20%"></ion-skeleton-text>
+    </ion-card-content>
   </ion-card>
 </ion-content>

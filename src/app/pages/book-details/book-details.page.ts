@@ -12,6 +12,7 @@ export class BookDetailsPage implements OnInit {
 
   constructor(private route: ActivatedRoute, private bookService: BookService, private loadingController: LoadingController) { }
   book = null;
+  isDataLoaded = false;
   ngOnInit() {
     const id: number = +(this.route.snapshot.paramMap.get('id'));
     console.log(id);
@@ -30,6 +31,7 @@ export class BookDetailsPage implements OnInit {
     //subscribing to an observable with a list of books as the result
     this.bookService.getBookDetails(id).subscribe(res => {
       loadingPopup.dismiss();
+      this.isDataLoaded = true;
       this.book = res;
       //convert the currency string to symbol based on enum names and values
       let price = Currency[this.book.currencyCode] + this.book.price;
