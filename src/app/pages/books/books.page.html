@@ -49,6 +49,10 @@
     </ion-card>
   </ion-col>
 
+  <div *ngIf="errorOccured" class="error-notice" (click)="loadBooks()">
+    <p class="error-notice-title">An error occured <br> while loading.</p>
+    <p class="error-notice-subtitle">Press here to retry.</p>
+  </div>
   <ion-col *ngIf="!isDataLoaded">
     <ion-card>
       <ion-card-content>

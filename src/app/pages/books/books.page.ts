@@ -14,6 +14,7 @@ export class BooksPage implements OnInit {
   books: any[] = [];
   sortOption = "title";
   isDataLoaded = false;
+  errorOccured = false;
   term;
   constructor(private bookService: BookService, private loadingController: LoadingController) { }
 
@@ -21,11 +22,13 @@ export class BooksPage implements OnInit {
     this.loadBooks();
   }
 
-  async loadBooks() {
-
+  public async loadBooks() {
+    this.errorOccured = false;
+    this.isDataLoaded = false;
     //subscribing to an observable with a list of books as the result
     this.bookService.getAllBooks().subscribe(res => {
       this.isDataLoaded = true;
+      
       this.books = res;
       this.books = this.sortBooksByTitle(this.books);
       this.books.forEach(book => {
@@ -37,6 +40,7 @@ export class BooksPage implements OnInit {
       });
     }, async (err) => {
       this.isDataLoaded = true;
+      this.errorOccured = true;
       console.log("error retrieving books: ", err);
     })
   }

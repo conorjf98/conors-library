@@ -13,11 +13,11 @@
     <div class="caption" ion-padding>
       {{book?.title}}
     </div>
-    <div class="subCaption" ion-padding>
+    <div *ngIf="book" class="subCaption" ion-padding>
       By {{book?.author}}
     </div>
   </div>
-  <ion-card>
+  <ion-card *ngIf="!errorOccured">
     <ion-card-content>
       <p class="title">Description:</p>
       <p class="description">{{book?.description}}</p>
@@ -25,6 +25,11 @@
       <p class="isbn">ISBN: {{book?.isbn}}</p>
     </ion-card-content>
   </ion-card>
+
+  <div *ngIf="errorOccured" class="error-notice" (click)="loadBookDetails()">
+    <p class="error-notice-title">An error occured <br> while loading.</p>
+    <p class="error-notice-subtitle">Press here to retry.</p>
+  </div>
 </ion-content>
 
 <ion-content *ngIf="!isDataLoaded">

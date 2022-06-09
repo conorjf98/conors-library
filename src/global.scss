@@ -152,3 +152,21 @@ ion-content {
         }
     }
 }
+
+.error-notice {
+    display: inline-block;
+    margin-left: 0 auto !important;
+    margin-right: 0 auto !important;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    margin-top: 30px;
+    .error-notice-title {
+        font-size: 30px;
+    }
+
+    .error-notice-subtitle {
+        font-size: 20px;
+        color: rgba(0,0,0,0.7);
+    }
+}
