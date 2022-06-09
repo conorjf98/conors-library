@@ -8,8 +8,11 @@ import { GlobalVariablesService } from 'src/app/services/global-variables.servic
   templateUrl: './books.page.html',
   styleUrls: ['./books.page.scss'],
 })
+
 export class BooksPage implements OnInit {
+
   books: any[] = [];
+  sortOption = "title";
   isDataLoaded = false;
   term;
   constructor(private bookService: BookService, private loadingController: LoadingController) { }
@@ -24,17 +27,87 @@ export class BooksPage implements OnInit {
     this.bookService.getAllBooks().subscribe(res => {
       this.isDataLoaded = true;
       this.books = res;
+      this.books = this.sortBooksByTitle(this.books);
       this.books.forEach(book => {
-         //convert the currency string to symbol based on enum names and values
-      let price = GlobalVariablesService.convertCurrency(book.currencyCode) + book.price;
-      
-      //overwrite price value with new appended currency symbol
-      book.price = price;
+        //convert the currency string to symbol based on enum names and values
+        let price = GlobalVariablesService.convertCurrency(book.currencyCode) + book.price;
+
+        //overwrite price value with new appended currency symbol
+        book.priceLabel = price;
       });
     }, async (err) => {
       this.isDataLoaded = true;
-      console.log("error retrieving books: ",err);
-  })
+      console.log("error retrieving books: ", err);
+    })
+  }
+
+  public sortBooks() {
+
+    console.log("Sorting books..." + this.sortOption);
+    switch (this.sortOption) {
+      case "title":
+        this.books = this.sortBooksByTitle(this.books);
+        break;
+      case "author":
+        this.books = this.sortBooksByAuthor(this.books);
+        break;
+      case "priceAscending":
+        this.books = this.sortBooksByPrice(this.books, true);
+        break;
+      case "priceDescending":
+        this.books = this.sortBooksByPrice(this.books, false);
+        break;
+      default:
+        break;
+    }
+  }
+
+  public sortBooksByPrice(bookArray: BookObject[], isAscending: boolean): BookObject[] {
+    var sortedArray = bookArray.sort((n1, n2) => {
+      if (n1.price > n2.price) {
+
+        return isAscending ? 1 : -1;
+      }
+
+      if (n1.price < n2.price) {
+        return isAscending ? -1 : 1;
+      }
+
+      return 0;
+    });
+    return sortedArray;
+  }
+
+  public sortBooksByTitle(bookArray: BookObject[]): BookObject[] {
+    var sortedArray = bookArray.sort((n1, n2) => {
+      if (n1.title > n2.title) {
+
+        return 1;
+      }
+
+      if (n1.title < n2.title) {
+        return -1;
+      }
+
+      return 0;
+    });
+    return sortedArray;
+  }
+
+  public sortBooksByAuthor(bookArray: BookObject[]): BookObject[] {
+    var sortedArray = bookArray.sort((n1, n2) => {
+      if (n1.author > n2.author) {
+
+        return 1;
+      }
+
+      if (n1.author < n2.author) {
+        return -1;
+      }
+
+      return 0;
+    });
+    return sortedArray;
   }
 
 }

@@ -31,16 +31,22 @@
     </div>
   </div>
 
-  
+  <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One" class="dropdown"
+    [(ngModel)]="sortOption" (ionChange)="sortBooks($event)">
+    <ion-select-option value="title">Title (A- Z)</ion-select-option>
+    <ion-select-option value="author">Author (A - Z)</ion-select-option>
+    <ion-select-option value="priceAscending">Price (Ascending)</ion-select-option>
+    <ion-select-option value="priceDescending">Price (Descending)</ion-select-option>
+  </ion-select>
   <ion-col>
-      <ion-card button *ngFor="let book of books | filter:term" [routerLink]="[book.id]">
-        <ion-card-content>
-          <p class="title">{{book.title}}</p>
-          <p class="author">By {{book.author}}</p>
-          <p class="price">price: {{book.price}}</p>
-          <p class="isbn">ISBN: {{book.isbn}}</p>
-        </ion-card-content>
-      </ion-card>
+    <ion-card button *ngFor="let book of books | filter:term" [routerLink]="[book.id]">
+      <ion-card-content>
+        <p class="title">{{book.title}}</p>
+        <p class="author">By {{book.author}}</p>
+        <p class="price">price: {{book.priceLabel}}</p>
+        <p class="isbn">ISBN: {{book.isbn}}</p>
+      </ion-card-content>
+    </ion-card>
   </ion-col>
 
   <ion-col *ngIf="!isDataLoaded">
@@ -108,5 +114,5 @@
         <ion-skeleton-text class="isbn" animated style="width: 20%"></ion-skeleton-text>
       </ion-card-content>
     </ion-card>
-</ion-col>
+  </ion-col>
 </ion-content>
