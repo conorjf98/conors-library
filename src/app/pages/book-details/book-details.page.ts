@@ -33,7 +33,7 @@ export class BookDetailsPage implements OnInit {
       let price = GlobalVariablesService.convertCurrency(this.book.currencyCode) + this.book.price;
       
       //overwrite price value with new appended currency symbol
-      this.book.price = price;
+      this.book.priceLabel = price;
     }, async (err) => {
       this.isDataLoaded = true;
       this.errorOccured = true;
