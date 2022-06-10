@@ -37,6 +37,12 @@ export class BooksPage implements OnInit {
 
         //overwrite price value with new appended currency symbol
         book.priceLabel = price;
+
+        //convert hidden prices to euro for future sorting
+        let newPrice = GlobalVariablesService.convertToEuro(book);
+        
+        //overwrite price with converted to euro value
+        book.price = newPrice;
       });
     }, async (err) => {
       this.isDataLoaded = true;
@@ -67,6 +73,7 @@ export class BooksPage implements OnInit {
   }
 
   public sortBooksByPrice(bookArray: BookObject[], isAscending: boolean): BookObject[] {
+
     var sortedArray = bookArray.sort((n1, n2) => {
       if (n1.price > n2.price) {
 
