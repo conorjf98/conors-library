@@ -40,7 +40,7 @@ export class BooksPage implements OnInit {
 
         //convert hidden prices to euro for future sorting
         let newPrice = GlobalVariablesService.convertToEuro(book);
-        
+
         //overwrite price with converted to euro value
         book.price = newPrice;
       });
@@ -91,12 +91,12 @@ export class BooksPage implements OnInit {
 
   public sortBooksByTitle(bookArray: BookObject[]): BookObject[] {
     var sortedArray = bookArray.sort((n1, n2) => {
-      if (n1.title > n2.title) {
+      if (n1.title.toLowerCase() > n2.title.toLowerCase()) {
 
         return 1;
       }
 
-      if (n1.title < n2.title) {
+      if (n1.title.toLowerCase() < n2.title.toLowerCase()) {
         return -1;
       }
 
@@ -107,12 +107,12 @@ export class BooksPage implements OnInit {
 
   public sortBooksByAuthor(bookArray: BookObject[]): BookObject[] {
     var sortedArray = bookArray.sort((n1, n2) => {
-      if (n1.author > n2.author) {
+      if (n1.author.toLowerCase() > n2.author.toLowerCase()) {
 
         return 1;
       }
 
-      if (n1.author < n2.author) {
+      if (n1.author.toLowerCase() < n2.author.toLowerCase()) {
         return -1;
       }
 
