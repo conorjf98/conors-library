@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { BookObject, BookService } from 'src/app/services/book.service';
@@ -19,7 +19,10 @@ export class BooksPage implements OnInit {
   isDataLoaded = false;
   errorOccured = false;
   term;
-  constructor(private bookService: BookService, private loadingController: LoadingController, private storageService: StorageService, private router: Router) { }
+  constructor(private bookService: BookService, 
+    private storageService: StorageService, 
+    private router: Router, 
+    private cdr: ChangeDetectorRef,) { }
 
   ngOnInit() {
     this.loadBooks();
@@ -30,6 +33,7 @@ export class BooksPage implements OnInit {
     this.storageService.addWishlistedItems(this.books).then((res)=> {
       console.log("In the then: ", res);
       this.books = res;
+      this.cdr.detectChanges();
     });
   }
 

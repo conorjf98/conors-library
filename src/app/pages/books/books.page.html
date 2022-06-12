@@ -41,8 +41,10 @@
   <ion-col>
     <ion-card button *ngFor="let book of books | filter:term" (click)="openBookDetailsPage(book.isWishlisted, book.id)">
       <ion-card-content>
-        <ion-icon button  (click)="wishlistBook($event, book.id, book.isWishlisted)" *ngIf="!book.isWishlisted" class="wishlist" slot="icon-only" name="heart-outline"></ion-icon>
-        <ion-icon button  (click)="wishlistBook($event, book.id, book.isWishlisted)" *ngIf="book.isWishlisted" class="wishlist" slot="icon-only" name="heart"></ion-icon>
+        <ion-button class="wishlist-button" (click)="wishlistBook($event, book.id, book.isWishlisted)" expand="block" fill="clear" shape="round">
+          <ion-icon class="wishlist-icon" *ngIf="!book.isWishlisted" slot="icon-only" name="heart-outline"></ion-icon>
+        <ion-icon class="wishlist-icon" *ngIf="book.isWishlisted"  slot="icon-only" name="heart"></ion-icon>
+        </ion-button>
         <p class="title">{{book.title}}</p>
         <p class="author">By {{book.author}}</p>
         <p class="price">price: {{book.priceLabel}}</p>

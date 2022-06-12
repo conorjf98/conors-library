@@ -45,6 +45,9 @@ export class StorageService {
     let wishlist = await this.getData();
     if (books.length > 0 && wishlist != undefined) {
       console.log("we entered")
+      books.forEach(book => {
+        book.isWishlisted = false;
+      });
       wishlist.forEach(wishlistId => {
         console.log("Wishlist ID: ", wishlistId);
         books.find(x => x.id == wishlistId).isWishlisted = true;
