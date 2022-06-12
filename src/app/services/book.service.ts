@@ -12,6 +12,7 @@ export interface BookObject {
   author: string;
   description: string;
   priceLabel: string;
+  isWishlisted: boolean;
 }
 
 @Injectable({

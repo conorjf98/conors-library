@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BookObject } from './book.service';
 
+
+export const WISHLIST_KEY = 'wishlist';
+
 @Injectable({
   providedIn: 'root'
 })

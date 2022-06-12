@@ -18,14 +18,18 @@ export class RequestInterceptor implements HttpInterceptor {
     constructor(private loadingController: LoadingController) { }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-        this.loadingController.getTop().then(hasLoading => {
-            if (!hasLoading) {
-                this.loadingController.create({
-                    spinner: 'bubbles',
-                    message: 'Loading...'
-                }).then(loading => loading.present());
-            }
-        });
+
+    //Commented out loading icon as it was redundant while skeleton text is present on pages. Remains here
+    //To demonstrate how an interceptor could be used to provide a loading animation for any call
+    
+        // this.loadingController.getTop().then(hasLoading => {
+        //     if (!hasLoading) {
+        //         this.loadingController.create({
+        //             spinner: 'bubbles',
+        //             message: 'Loading...'
+        //         }).then(loading => loading.present());
+        //     }
+        // });
 
         return next.handle(request).pipe(
             timeout(timeoutMilliSeconds),

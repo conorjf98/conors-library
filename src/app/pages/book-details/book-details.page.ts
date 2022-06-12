@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { BookObject, BookService } from 'src/app/services/book.service';
-import { GlobalVariablesService } from 'src/app/services/global-variables.service';
-
+import { WISHLIST_KEY, GlobalVariablesService } from 'src/app/services/global-variables.service';
+import { StorageService } from 'src/app/services/storage.service';
 @Component({
   selector: 'app-book-details',
   templateUrl: './book-details.page.html',
@@ -11,16 +11,26 @@ import { GlobalVariablesService } from 'src/app/services/global-variables.servic
 })
 export class BookDetailsPage implements OnInit {
 
-  constructor(private route: ActivatedRoute, private bookService: BookService, private loadingController: LoadingController) { }
+  isWishlisted = false;
   book = null;
   isDataLoaded = false;
   errorOccured = false;
-  bookId = 0;
+  bookId = -1;
+
+  constructor(private route: ActivatedRoute, private bookService: BookService, private storageService: StorageService, private router: Router) {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.isWishlisted = this.router.getCurrentNavigation().extras.state.isWishlisted;
+        this.bookId = this.router.getCurrentNavigation().extras.state.bookId;
+      }
+    });
+   }
+  
   ngOnInit() {
-    this.bookId = +(this.route.snapshot.paramMap.get('id'));
-    console.log(this.bookId);
     this.loadBookDetails();
   }
+
+
 
   async loadBookDetails() {
     this.isDataLoaded = false;
@@ -39,6 +49,17 @@ export class BookDetailsPage implements OnInit {
       this.errorOccured = true;
       console.log("error retrieving books: ", err);
     })
+  }
+
+  public toggleWishlistBook(){
+    if(this.book != null){
+      if(this.isWishlisted){
+        this.storageService.removeItem(this.book.id);
+      } else{
+        this.storageService.addData(this.book.id);
+      }
+      this.isWishlisted = !this.isWishlisted;
+    }
   }
 }
 

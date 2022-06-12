@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { BookObject, BookService } from 'src/app/services/book.service';
-import { GlobalVariablesService } from 'src/app/services/global-variables.service';
+import { WISHLIST_KEY, GlobalVariablesService } from 'src/app/services/global-variables.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-books',
@@ -11,16 +13,27 @@ import { GlobalVariablesService } from 'src/app/services/global-variables.servic
 
 export class BooksPage implements OnInit {
 
-  books: any[] = [];
+  books: BookObject[] = [];
+  wishlist: number[] = [];
   sortOption = "title";
   isDataLoaded = false;
   errorOccured = false;
   term;
-  constructor(private bookService: BookService, private loadingController: LoadingController) { }
+  constructor(private bookService: BookService, private loadingController: LoadingController, private storageService: StorageService, private router: Router) { }
 
   ngOnInit() {
     this.loadBooks();
   }
+
+  async ionViewWillEnter() {
+    console.log("IonViewWillEnter - books page");
+    this.storageService.addWishlistedItems(this.books).then((res)=> {
+      console.log("In the then: ", res);
+      this.books = res;
+    });
+  }
+
+  
 
   public async loadBooks() {
     this.errorOccured = false;
@@ -42,7 +55,14 @@ export class BooksPage implements OnInit {
         let newPrice = GlobalVariablesService.convertToEuro(book);
 
         //overwrite price with converted to euro value
-        book.price = newPrice;
+        book.price = newPrice; 
+
+        book.isWishlisted = false;  
+        console.log("ID: ", book.id);   
+      });
+      this.storageService.addWishlistedItems(this.books).then((res)=> {
+        console.log("In the then: ", res);
+        this.books = res;
       });
     }, async (err) => {
       this.isDataLoaded = true;
@@ -121,4 +141,20 @@ export class BooksPage implements OnInit {
     return sortedArray;
   }
 
+
+  public doRefresh(event){
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
+
+  openBookDetailsPage(isWishlisted, id) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        isWishlisted: isWishlisted,
+        bookId: id
+      }
+    };
+    this.router.navigate([`books/:${id}`], navigationExtras);
+  }
 }

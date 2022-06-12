@@ -4,6 +4,13 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/books"></ion-back-button>
     </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleWishlistBook()">
+        <ion-icon *ngIf="isWishlisted" class="wishlist" slot="icon-only" name="heart"></ion-icon>
+        <ion-icon *ngIf="!isWishlisted" class="wishlist" slot="icon-only" name="heart-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

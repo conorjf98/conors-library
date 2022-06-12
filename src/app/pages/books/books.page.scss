@@ -14,3 +14,16 @@ ion-select::part(text) {
     font-family: "Joan Regular";
 }
 
+ion-card {
+    width: 95%;
+}
+
+
+.wishlist {
+    float: right;
+    margin-top: 0px;
+    width: 35px;
+    margin-bottom: 0px;
+    height: 35px;
+    color: var(--ion-color-secondary);
+}
