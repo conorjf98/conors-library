@@ -38,6 +38,7 @@
     <ion-select-option value="priceAscending">Price (Ascending)</ion-select-option>
     <ion-select-option value="priceDescending">Price (Descending)</ion-select-option>
   </ion-select>
+  <div style="height: 20px;"></div>
   <ion-col>
     <ion-card button *ngFor="let book of books | filter:term" (click)="openBookDetailsPage(book.isWishlisted, book.id)">
       <ion-card-content>
