@@ -158,7 +158,9 @@ export class BooksPage implements OnInit {
     this.router.navigate([`books/:${id}`], navigationExtras);
   }
 
-  public innerButton(event, bookId: number, isWishlisted: boolean){ 
+  public wishlistBook(event, bookId: number, isWishlisted: boolean){ 
+
+    //event.propagation is needed to cancel the parent button event 
     event.stopPropagation();
     this.storageService.toggleIsWishlisted(isWishlisted, bookId);
     this.books.find(x => x.id == bookId).isWishlisted = !isWishlisted;
