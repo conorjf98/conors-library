@@ -22,13 +22,13 @@ export class StorageService {
     return this.storage.get(STORAGE_KEY) || [];
   }
 
-  async addData(item) {
+  async addData(item: any) {
     const storedData = await this.storage.get(STORAGE_KEY) || [];
     storedData.push(item);
     return this.storage.set(STORAGE_KEY, storedData);
   }
 
-  async removeItem(id) {
+  async removeItem(id: number) {
     const storedData = await this.storage.get(STORAGE_KEY) || [];
     const index = storedData.map(e => e.id).indexOf(id);
     if (index) {
@@ -52,5 +52,13 @@ export class StorageService {
     }
 
     return books;
+  }
+
+  public async toggleIsWishlisted(isWishlisted: boolean, bookId: number){
+    if(isWishlisted){
+      this.removeItem(bookId);
+    } else{
+      this.addData(bookId);
+    }
   }
 }

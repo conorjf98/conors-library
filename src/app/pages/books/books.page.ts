@@ -148,7 +148,7 @@ export class BooksPage implements OnInit {
     }, 2000);
   }
 
-  openBookDetailsPage(isWishlisted, id) {
+  public openBookDetailsPage(isWishlisted: boolean, id: number) {
     let navigationExtras: NavigationExtras = {
       state: {
         isWishlisted: isWishlisted,
@@ -156,5 +156,11 @@ export class BooksPage implements OnInit {
       }
     };
     this.router.navigate([`books/:${id}`], navigationExtras);
+  }
+
+  public innerButton(event, bookId: number, isWishlisted: boolean){ 
+    event.stopPropagation();
+    this.storageService.toggleIsWishlisted(isWishlisted, bookId);
+    this.books.find(x => x.id == bookId).isWishlisted = !isWishlisted;
   }
 }

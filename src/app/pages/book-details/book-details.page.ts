@@ -53,11 +53,7 @@ export class BookDetailsPage implements OnInit {
 
   public toggleWishlistBook(){
     if(this.book != null){
-      if(this.isWishlisted){
-        this.storageService.removeItem(this.book.id);
-      } else{
-        this.storageService.addData(this.book.id);
-      }
+      this.storageService.toggleIsWishlisted(this.isWishlisted, this.book.id);
       this.isWishlisted = !this.isWishlisted;
     }
   }
