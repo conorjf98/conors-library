@@ -37,12 +37,14 @@ export class BooksPage implements OnInit {
       console.log("In the then: ", res);
       this.allBooks = res;
       this.books = res;
+      if (this.isWishlistedToggled) {
+        console.log("Wishlisted is toggled on");
+        this.toggleWishlistedBooks();
+      }
       this.cdr.detectChanges();
     });
 
-    if (this.isWishlistedToggled) {
-      this.toggleWishlistedBooks();
-    }
+
   }
 
 
