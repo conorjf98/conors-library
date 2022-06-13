@@ -19,10 +19,6 @@
 <ion-content [fullscreen]="true">
   <div class="banner">
     <img class="app-title" src="../../../assets/appTitle.png">
-    <!-- <div class="caption" ion-padding>
-      Conors <br>
-      Library
-    </div> -->
     <div class="search">
       <ion-item lines="none" class="ion-no-padding">
         <ion-icon slot="start" name="search-outline"></ion-icon>
@@ -30,16 +26,22 @@
       </ion-item>
     </div>
   </div>
-
-  <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One" class="dropdown"
-    [(ngModel)]="sortOption" (ionChange)="sortBooks($event)">
-    <ion-select-option value="title">Title (A- Z)</ion-select-option>
-    <ion-select-option value="author">Author (A - Z)</ion-select-option>
-    <ion-select-option value="priceAscending">Price (Ascending)</ion-select-option>
-    <ion-select-option value="priceDescending">Price (Descending)</ion-select-option>
-  </ion-select>
-  <div style="height: 20px;"></div>
-  <ion-col>
+  <ion-item  lines="none" class="options-bar">
+    <ion-item *ngIf="isDataLoaded" class="wishlist-toggle" lines="none">
+      <ion-label >Wishlisted</ion-label>
+      <ion-toggle (ionChange) = "toggleWishlistedBooks()" [(ngModel)]="isWishlistedToggled"></ion-toggle>
+    </ion-item>
+    <ion-item  lines="none" class="dropdown">
+    <ion-select *ngIf="isDataLoaded" item-end [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One" 
+      [(ngModel)]="sortOption" (ionChange)="sortBooks($event)">
+      <ion-select-option value="title">Title (A- Z)</ion-select-option>
+      <ion-select-option value="author">Author (A - Z)</ion-select-option>
+      <ion-select-option value="priceAscending">Price (Ascending)</ion-select-option>
+      <ion-select-option value="priceDescending">Price (Descending)</ion-select-option>
+    </ion-select>
+    </ion-item>
+  </ion-item>
+  <ion-col class="book-list">
     <ion-card button *ngFor="let book of books | filter:term" (click)="openBookDetailsPage(book.isWishlisted, book.id)">
       <ion-card-content>
         <ion-button class="wishlist-button" (click)="wishlistBook($event, book.id, book.isWishlisted)" expand="block" fill="clear" shape="round">
@@ -58,7 +60,7 @@
     <p class="error-notice-title">An error occured <br> while loading.</p>
     <p class="error-notice-subtitle">Press here to retry.</p>
   </div>
-  <ion-col *ngIf="!isDataLoaded">
+  <ion-col class="book-list" *ngIf="!isDataLoaded">
     <ion-card>
       <ion-card-content>
         <ion-skeleton-text class="title" animated style="width: 90%"></ion-skeleton-text>

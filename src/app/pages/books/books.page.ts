@@ -13,11 +13,14 @@ import { StorageService } from 'src/app/services/storage.service';
 
 export class BooksPage implements OnInit {
 
+  allBooks: BookObject[] = [];
+  wishlistedBooks: BookObject[] = [];
   books: BookObject[] = [];
   wishlist: number[] = [];
   sortOption = "title";
   isDataLoaded = false;
   errorOccured = false;
+  isWishlistedToggled = false;
   term;
   constructor(private bookService: BookService, 
     private storageService: StorageService, 
@@ -30,11 +33,16 @@ export class BooksPage implements OnInit {
 
   async ionViewWillEnter() {
     console.log("IonViewWillEnter - books page");
-    this.storageService.addWishlistedItems(this.books).then((res)=> {
+    this.storageService.addWishlistedItems(this.allBooks).then((res)=> {
       console.log("In the then: ", res);
+      this.allBooks = res;
       this.books = res;
       this.cdr.detectChanges();
     });
+
+    if(this.isWishlistedToggled){
+      this.toggleWishlistedBooks();
+    }
   }
 
   
@@ -47,6 +55,7 @@ export class BooksPage implements OnInit {
       this.isDataLoaded = true;
       
       this.books = res;
+      this.allBooks = res;
       this.books = this.sortBooksByTitle(this.books);
       this.books.forEach(book => {
         //convert the currency string to symbol based on enum names and values
@@ -168,5 +177,21 @@ export class BooksPage implements OnInit {
     event.stopPropagation();
     this.storageService.toggleIsWishlisted(isWishlisted, bookId);
     this.books.find(x => x.id == bookId).isWishlisted = !isWishlisted;
+  }
+
+  public toggleWishlistedBooks(){
+    this.wishlistedBooks = [];
+    if(this.isWishlistedToggled){
+      this.allBooks.forEach(book => {
+        if(book.isWishlisted == true){
+          this.wishlistedBooks.push(book);
+        }
+      });
+      this.books = this.wishlistedBooks;
+    } else {
+      this.books = this.allBooks;
+    }
+    this.sortBooks();
+    this.cdr.detectChanges();
   }
 }
