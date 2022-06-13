@@ -54,12 +54,19 @@ ion-header {
 }
 
 ion-content {
+    
     .banner {
         position: relative;
+        background-image: url(assets/appBanner.png);
+        background-position: center;
+        background-size: cover;
         margin-bottom: 30px;
-        img {
-            width:100%;
-            height:210px;
+        width:100%;
+        height:210px;
+        text-align: center;
+        .app-title{
+            width: 250px;
+            margin-top: 50px;
         }
     }
 
