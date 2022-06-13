@@ -174,7 +174,7 @@ export class BooksPage implements OnInit {
   }
 
   public wishlistBook(event, bookId: number, isWishlisted: boolean) {
-
+    
     //event.propagation is needed to cancel the parent button event 
     event.stopPropagation();
     this.storageService.toggleIsWishlisted(isWishlisted, bookId);

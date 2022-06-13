@@ -30,11 +30,10 @@ export class StorageService {
 
   async removeItem(id: number) {
     const storedData = await this.storage.get(STORAGE_KEY) || [];
-    const index = storedData.map(e => e.id).indexOf(id);
-    if (index) {
-      storedData.splice(index, 1);
-    }
-    return this.storage.set(STORAGE_KEY, storedData);
+    const filtered = storedData.filter(function(book) { return book != id; }); 
+    console.log("Filtered List: ", filtered);
+    
+    return this.storage.set(STORAGE_KEY, filtered);
   }
 
   public async removeAll(): Promise<void> {
