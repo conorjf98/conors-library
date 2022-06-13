@@ -11,11 +11,11 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class BookDetailsPage implements OnInit {
 
-  isWishlisted = false;
+  isWishlisted: boolean = false;
   book = null;
-  isDataLoaded = false;
-  errorOccured = false;
-  bookId = -1;
+  isDataLoaded: boolean = false;
+  errorOccured: boolean = false;
+  bookId: number = -1;
 
   constructor(private route: ActivatedRoute, private bookService: BookService, private storageService: StorageService, private router: Router) {
     this.route.queryParams.subscribe(params => {
@@ -24,8 +24,8 @@ export class BookDetailsPage implements OnInit {
         this.bookId = this.router.getCurrentNavigation().extras.state.bookId;
       }
     });
-   }
-  
+  }
+
   ngOnInit() {
     this.loadBookDetails();
   }
@@ -40,8 +40,8 @@ export class BookDetailsPage implements OnInit {
       this.isDataLoaded = true;
       this.book = res;
       //convert the currency string to symbol based on enum names and values
-      let price = GlobalVariablesService.convertCurrency(this.book.currencyCode) + this.book.price;
-      
+      let price: string = GlobalVariablesService.convertCurrency(this.book.currencyCode) + this.book.price;
+
       //overwrite price value with new appended currency symbol
       this.book.priceLabel = price;
     }, async (err) => {
@@ -51,8 +51,8 @@ export class BookDetailsPage implements OnInit {
     })
   }
 
-  public toggleWishlistBook(){
-    if(this.book != null){
+  public toggleWishlistBook() {
+    if (this.book != null) {
       this.storageService.toggleIsWishlisted(this.isWishlisted, this.book.id);
       this.isWishlisted = !this.isWishlisted;
     }

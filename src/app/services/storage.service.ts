@@ -57,10 +57,10 @@ export class StorageService {
     return books;
   }
 
-  public async toggleIsWishlisted(isWishlisted: boolean, bookId: number){
-    if(isWishlisted){
+  public async toggleIsWishlisted(isWishlisted: boolean, bookId: number) {
+    if (isWishlisted) {
       this.removeItem(bookId);
-    } else{
+    } else {
       this.addData(bookId);
     }
   }

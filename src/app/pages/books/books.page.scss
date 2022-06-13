@@ -1,5 +1,3 @@
-
-
 /* Set the placeholder color and opacity */
 ion-select::part(placeholder) {
     font-family: "Joan Regular";
@@ -22,7 +20,7 @@ ion-card {
     color: var(--ion-color-secondary);
 }
 
-.wishlist-button{
+.wishlist-button {
     float: right;
     margin-right: -25px;
     height: 50px;
@@ -41,10 +39,10 @@ ion-card {
         --background: transparent;
     }
 
-    .wishlist-toggle{
-        float: left; 
-        width: 155px; 
-        height: 50px; 
+    .wishlist-toggle {
+        float: left;
+        width: 155px;
+        height: 50px;
         --background: transparent;
         margin-right: auto;
     }

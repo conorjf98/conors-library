@@ -17,14 +17,14 @@ export class BooksPage implements OnInit {
   wishlistedBooks: BookObject[] = [];
   books: BookObject[] = [];
   wishlist: number[] = [];
-  sortOption = "title";
-  isDataLoaded = false;
-  errorOccured = false;
-  isWishlistedToggled = false;
+  sortOption: string = "title";
+  isDataLoaded: boolean = false;
+  errorOccured: boolean = false;
+  isWishlistedToggled: boolean = false;
   term;
-  constructor(private bookService: BookService, 
-    private storageService: StorageService, 
-    private router: Router, 
+  constructor(private bookService: BookService,
+    private storageService: StorageService,
+    private router: Router,
     private cdr: ChangeDetectorRef,) { }
 
   ngOnInit() {
@@ -33,19 +33,19 @@ export class BooksPage implements OnInit {
 
   async ionViewWillEnter() {
     console.log("IonViewWillEnter - books page");
-    this.storageService.addWishlistedItems(this.allBooks).then((res)=> {
+    this.storageService.addWishlistedItems(this.allBooks).then((res) => {
       console.log("In the then: ", res);
       this.allBooks = res;
       this.books = res;
       this.cdr.detectChanges();
     });
 
-    if(this.isWishlistedToggled){
+    if (this.isWishlistedToggled) {
       this.toggleWishlistedBooks();
     }
   }
 
-  
+
 
   public async loadBooks() {
     this.errorOccured = false;
@@ -53,27 +53,27 @@ export class BooksPage implements OnInit {
     //subscribing to an observable with a list of books as the result
     this.bookService.getAllBooks().subscribe(res => {
       this.isDataLoaded = true;
-      
+
       this.books = res;
       this.allBooks = res;
       this.books = this.sortBooksByTitle(this.books);
       this.books.forEach(book => {
         //convert the currency string to symbol based on enum names and values
-        let price = GlobalVariablesService.convertCurrency(book.currencyCode) + book.price;
+        let price: string = GlobalVariablesService.convertCurrency(book.currencyCode) + book.price;
 
         //overwrite price value with new appended currency symbol
         book.priceLabel = price;
 
         //convert hidden prices to euro for future sorting
-        let newPrice = GlobalVariablesService.convertToEuro(book);
+        let newPrice: number = GlobalVariablesService.convertToEuro(book);
 
         //overwrite price with converted to euro value
-        book.price = newPrice; 
+        book.price = newPrice;
 
-        book.isWishlisted = false;  
-        console.log("ID: ", book.id);   
+        book.isWishlisted = false;
+        console.log("ID: ", book.id);
       });
-      this.storageService.addWishlistedItems(this.books).then((res)=> {
+      this.storageService.addWishlistedItems(this.books).then((res) => {
         console.log("In the then: ", res);
         this.books = res;
       });
@@ -107,7 +107,7 @@ export class BooksPage implements OnInit {
 
   public sortBooksByPrice(bookArray: BookObject[], isAscending: boolean): BookObject[] {
 
-    var sortedArray = bookArray.sort((n1, n2) => {
+    let sortedArray: BookObject[] = bookArray.sort((n1, n2) => {
       if (n1.price > n2.price) {
 
         return isAscending ? 1 : -1;
@@ -123,7 +123,7 @@ export class BooksPage implements OnInit {
   }
 
   public sortBooksByTitle(bookArray: BookObject[]): BookObject[] {
-    var sortedArray = bookArray.sort((n1, n2) => {
+    let sortedArray: BookObject[] = bookArray.sort((n1, n2) => {
       if (n1.title.toLowerCase() > n2.title.toLowerCase()) {
 
         return 1;
@@ -139,7 +139,7 @@ export class BooksPage implements OnInit {
   }
 
   public sortBooksByAuthor(bookArray: BookObject[]): BookObject[] {
-    var sortedArray = bookArray.sort((n1, n2) => {
+    let sortedArray: BookObject[] = bookArray.sort((n1, n2) => {
       if (n1.author.toLowerCase() > n2.author.toLowerCase()) {
 
         return 1;
@@ -155,7 +155,7 @@ export class BooksPage implements OnInit {
   }
 
 
-  public doRefresh(event){
+  public doRefresh(event) {
     setTimeout(() => {
       event.target.complete();
     }, 2000);
@@ -171,7 +171,7 @@ export class BooksPage implements OnInit {
     this.router.navigate([`books/:${id}`], navigationExtras);
   }
 
-  public wishlistBook(event, bookId: number, isWishlisted: boolean){ 
+  public wishlistBook(event, bookId: number, isWishlisted: boolean) {
 
     //event.propagation is needed to cancel the parent button event 
     event.stopPropagation();
@@ -179,11 +179,11 @@ export class BooksPage implements OnInit {
     this.books.find(x => x.id == bookId).isWishlisted = !isWishlisted;
   }
 
-  public toggleWishlistedBooks(){
+  public toggleWishlistedBooks() {
     this.wishlistedBooks = [];
-    if(this.isWishlistedToggled){
+    if (this.isWishlistedToggled) {
       this.allBooks.forEach(book => {
-        if(book.isWishlisted == true){
+        if (book.isWishlisted == true) {
           this.wishlistedBooks.push(book);
         }
       });

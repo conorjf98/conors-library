@@ -19,9 +19,9 @@ export class RequestInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    //Commented out loading icon as it was redundant while skeleton text is present on pages. Remains here
-    //To demonstrate how an interceptor could be used to provide a loading animation for any call
-    
+        //Commented out loading icon as it was redundant while skeleton text is present on pages. Remains here
+        //To demonstrate how an interceptor could be used to provide a loading animation for any call
+
         // this.loadingController.getTop().then(hasLoading => {
         //     if (!hasLoading) {
         //         this.loadingController.create({

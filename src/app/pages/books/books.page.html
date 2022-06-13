@@ -26,27 +26,28 @@
       </ion-item>
     </div>
   </div>
-  <ion-item  lines="none" class="options-bar">
+  <ion-item lines="none" class="options-bar">
     <ion-item *ngIf="isDataLoaded" class="wishlist-toggle" lines="none">
-      <ion-label >Wishlisted</ion-label>
-      <ion-toggle (ionChange) = "toggleWishlistedBooks()" [(ngModel)]="isWishlistedToggled"></ion-toggle>
+      <ion-label>Wishlisted</ion-label>
+      <ion-toggle (ionChange)="toggleWishlistedBooks()" [(ngModel)]="isWishlistedToggled"></ion-toggle>
     </ion-item>
-    <ion-item  lines="none" class="dropdown">
-    <ion-select *ngIf="isDataLoaded" item-end [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="Select One" 
-      [(ngModel)]="sortOption" (ionChange)="sortBooks($event)">
-      <ion-select-option value="title">Title (A- Z)</ion-select-option>
-      <ion-select-option value="author">Author (A - Z)</ion-select-option>
-      <ion-select-option value="priceAscending">Price (Ascending)</ion-select-option>
-      <ion-select-option value="priceDescending">Price (Descending)</ion-select-option>
-    </ion-select>
+    <ion-item lines="none" class="dropdown">
+      <ion-select *ngIf="isDataLoaded" item-end [interfaceOptions]="customPopoverOptions" interface="popover"
+        placeholder="Select One" [(ngModel)]="sortOption" (ionChange)="sortBooks($event)">
+        <ion-select-option value="title">Title (A- Z)</ion-select-option>
+        <ion-select-option value="author">Author (A - Z)</ion-select-option>
+        <ion-select-option value="priceAscending">Price (Ascending)</ion-select-option>
+        <ion-select-option value="priceDescending">Price (Descending)</ion-select-option>
+      </ion-select>
     </ion-item>
   </ion-item>
   <ion-col class="book-list">
     <ion-card button *ngFor="let book of books | filter:term" (click)="openBookDetailsPage(book.isWishlisted, book.id)">
       <ion-card-content>
-        <ion-button class="wishlist-button" (click)="wishlistBook($event, book.id, book.isWishlisted)" expand="block" fill="clear" shape="round">
+        <ion-button class="wishlist-button" (click)="wishlistBook($event, book.id, book.isWishlisted)" expand="block"
+          fill="clear" shape="round">
           <ion-icon class="wishlist-icon" *ngIf="!book.isWishlisted" slot="icon-only" name="heart-outline"></ion-icon>
-        <ion-icon class="wishlist-icon" *ngIf="book.isWishlisted"  slot="icon-only" name="heart"></ion-icon>
+          <ion-icon class="wishlist-icon" *ngIf="book.isWishlisted" slot="icon-only" name="heart"></ion-icon>
         </ion-button>
         <p class="title">{{book.title}}</p>
         <p class="author">By {{book.author}}</p>
